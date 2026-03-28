@@ -92,8 +92,8 @@ jobs:
           file: ./api/Dockerfile
           push: true
           tags: |
-            karris12/backend:latest
-            karris12/backend:${{ env.IMAGE_TAG }}
+            agodzo/backend:latest
+            agodzo/backend:${{ env.IMAGE_TAG }}
 
   build_frontend_docker_image_and_push:
     runs-on: ubuntu-latest
