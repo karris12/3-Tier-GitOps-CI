@@ -121,8 +121,8 @@ jobs:
           file: ./client/Dockerfile
           push: true
           tags: |
-            karris12/frontend:latest
-            karris12/frontend:${{ env.IMAGE_TAG }}
+            agodzo/frontend:latest
+            agodzo/frontend:${{ env.IMAGE_TAG }}
 
   trivy_image_scan:
     runs-on: ubuntu-latest
@@ -137,7 +137,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: image
-          image-ref: karris12/backend:${{ env.IMAGE_TAG }}
+          image-ref: agodzo/backend:${{ env.IMAGE_TAG }}
           format: table
           exit-code: '0'                 # set to '1' to fail on vulns
           ignore-unfixed: true
@@ -148,7 +148,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: image
-          image-ref: karris12/frontend:${{ env.IMAGE_TAG }}
+          image-ref: agodzo/frontend:${{ env.IMAGE_TAG }}
           format: table
           exit-code: '0'
           ignore-unfixed: true
@@ -184,7 +184,7 @@ jobs:
                | .spec.template.spec.containers[]
                | select(.name=="backend")
                | .image)
-            = "karris12/backend:" + strenv(IMAGE_TAG)
+            = "agodzo/backend:" + strenv(IMAGE_TAG)
           ' k8s-prod/backend.yaml
 
           # -- Update ONLY Deployment images (frontend)
@@ -193,14 +193,14 @@ jobs:
                | .spec.template.spec.containers[]
                | select(.name=="frontend")
                | .image)
-            = "karris12/frontend:" + strenv(IMAGE_TAG)
+            = "agodzo/frontend:" + strenv(IMAGE_TAG)
           ' k8s-prod/frontend.yaml
 
       - name: Commit & push to CD repo
         working-directory: cd
         run: |
-          git config user.name "ci-bot"
-          git config user.email "ci-bot@users.noreply.github.com"
+          git config user.name "karris12"
+          git config user.email "agodzzo@gmail.com.github.com"
           git add -A
           git commit -m "bump images to ${IMAGE_TAG}" || echo "no changes"
           git push
